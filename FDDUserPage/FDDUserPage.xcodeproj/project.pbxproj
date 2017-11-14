@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D9F6AFAF1FBABE2800163F5C /* FDDUserPageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6AFAE1FBABE2800163F5C /* FDDUserPageTests.m */; };
 		D9F6AFBA1FBABE2800163F5C /* FDDUserPageUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6AFB91FBABE2800163F5C /* FDDUserPageUITests.m */; };
+		D9F6AFD51FBAC07200163F5C /* FDDUserPage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6AFD41FBAC07200163F5C /* FDDUserPage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,8 @@
 		D9F6AFD01FBABEF800163F5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9F6AFD11FBABEF800163F5C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D9F6AFD21FBABEF800163F5C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D9F6AFD31FBAC07200163F5C /* FDDUserPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FDDUserPage.h; sourceTree = "<group>"; };
+		D9F6AFD41FBAC07200163F5C /* FDDUserPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FDDUserPage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 		D9F6AF941FBABE2800163F5C /* FDDUserPage */ = {
 			isa = PBXGroup;
 			children = (
+				D9F6AFD31FBAC07200163F5C /* FDDUserPage.h */,
+				D9F6AFD41FBAC07200163F5C /* FDDUserPage.m */,
 			);
 			path = FDDUserPage;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F6AFD51FBAC07200163F5C /* FDDUserPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
