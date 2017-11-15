@@ -10,10 +10,17 @@
 typedef enum : NSUInteger {
     FDDUserPageNormal,//默认启动图
     FDDUserPageGif,//gif启动图
+    FDDADPage,//广告图
 } FDDUserPageType;
 @interface FDDUserPage : UIView
 //当前选中的颜色
 @property(nonatomic,strong)UIColor *currentPageControlColor;
+
+
+//是否自动滚动
+@property(nonatomic,assign)BOOL   isautoScrolling;
+//是否可以自动播放视频
+@property(nonatomic,assign)BOOL   isLoopPlayback;
 
 /**
  没有选中的颜色
@@ -43,6 +50,8 @@ typedef enum : NSUInteger {
  *  @return FDDUserPage对象
  */
 - (instancetype)initWithFrame:(CGRect)frame videoURL:(NSURL *)videoURL;
+
+
 
 
 @end

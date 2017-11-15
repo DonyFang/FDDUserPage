@@ -20,25 +20,30 @@
 @property (nonatomic, assign) NSInteger               slideIntoNumber;
 @property (nonatomic, strong) MPMoviePlayerController *playerController;
 @property(nonatomic,strong)UIButton *skipButton;
+@property(nonatomic,strong)UIScrollView *guidePageView;
+
+@property(nonatomic,strong)NSTimer *timer;
 @end
 @implementation FDDUserPage
 
 - (instancetype)initWithFrame:(CGRect)frame imageNameArray:(NSArray<NSString *> *)imageNameArray buttonIsHidden:(BOOL)isHidden userPageType:(FDDUserPageType)userPageType {
     if ([super initWithFrame:frame]) {
         self.slideInto = NO;
+        self.isautoScrolling = NO;
+        
         if (isHidden == YES) {
             self.imageArray = imageNameArray;
         }
         
         // 设置引导视图的scrollview
-        UIScrollView *guidePageView = [[UIScrollView alloc]initWithFrame:frame];
-        [guidePageView setBackgroundColor:[UIColor lightGrayColor]];
-        [guidePageView setContentSize:CGSizeMake(DDScreenW*imageNameArray.count, DDScreenH)];
-        [guidePageView setBounces:NO];
-        [guidePageView setPagingEnabled:YES];
-        [guidePageView setShowsHorizontalScrollIndicator:NO];
-        [guidePageView setDelegate:self];
-        [self addSubview:guidePageView];
+        self.guidePageView = [[UIScrollView alloc]initWithFrame:frame];
+        [ self.guidePageView setBackgroundColor:[UIColor lightGrayColor]];
+        [ self.guidePageView setContentSize:CGSizeMake(DDScreenW*imageNameArray.count, DDScreenH)];
+        [ self.guidePageView setBounces:NO];
+        [ self.guidePageView setPagingEnabled:YES];
+        [ self.guidePageView setShowsHorizontalScrollIndicator:NO];
+        [ self.guidePageView setDelegate:self];
+        [self addSubview: self.guidePageView];
         // 设置引导页上的跳过按钮
         [self addSubview:self.skipButton];
         // 添加在引导视图上的多张引导图片
@@ -47,12 +52,11 @@
             if (userPageType == FDDUserPageGif) {
                 NSData *localData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageNameArray[i] ofType:nil]];
                 imageView = (UIImageView *)[[FDDGifImageTool alloc] initWithFrame:imageView.frame gifImageData:localData];
-                [guidePageView addSubview:imageView];
+                [self.guidePageView addSubview:imageView];
             } else if(userPageType == FDDUserPageNormal){
                 imageView.image = [UIImage imageNamed:imageNameArray[i]];
-                [guidePageView addSubview:imageView];
+                [self.guidePageView addSubview:imageView];
             }
-            
             // 设置在最后一张图片上显示进入体验按钮
             if (i == imageNameArray.count-1 && isHidden == NO) {
                 [imageView setUserInteractionEnabled:YES];
@@ -70,13 +74,43 @@
         self.imagePageControl.numberOfPages = imageNameArray.count;
         [self addSubview:self.imagePageControl];
         
+        [self startTimer];
     }
     return self;
 }
 
+- (void)setIsautoScrolling:(BOOL)isautoScrolling{
+    _isautoScrolling = isautoScrolling;
+    if (!_timer && _isautoScrolling) {
+        [self startTimer];
+    }
+}
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollview {
-    int page = scrollview.contentOffset.x / scrollview.frame.size.width;
+- (void)startTimer{
+    if (!_isautoScrolling) {
+        return;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(scrollingOnTimer) userInfo:nil repeats:YES];
+}
+
+- (void)scrollingOnTimer{
+    CGRect frame = self.imagePageControl.frame;
+    frame.origin.x = frame.size.width * (_imagePageControl.currentPage + 1);
+    frame.origin.y = 0;
+    if(frame.origin.x >=self.guidePageView.contentSize.width){
+        frame.origin.x = 0;
+    }
+    [self.guidePageView scrollRectToVisible:frame animated:YES];
+    
+}
+
+- (void)stopTimer{
+    [_timer invalidate];
+    _timer = nil;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    int page = scrollView.contentOffset.x / scrollView.frame.size.width;
     [self.imagePageControl setCurrentPage:page];
     if (self.imageArray && page == self.imageArray.count-1 && self.slideInto == NO) {
         [self buttonClick:nil];
@@ -91,6 +125,13 @@
             if (self.slideIntoNumber == 3) {
                 [self buttonClick:nil];
             }
+        }
+    }
+    if (scrollView.isTracking) {
+        [self stopTimer];
+    }else{
+        if (!_timer) {
+            [self startTimer];
         }
     }
 }
@@ -173,4 +214,7 @@
     self.imagePageControl.pageIndicatorTintColor = pageIndicatorTintColor;
 }
 
+- (void)dealloc{
+    [self stopTimer];
+}
 @end

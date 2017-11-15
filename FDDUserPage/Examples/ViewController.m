@@ -49,6 +49,7 @@
     FDDUserPage *guidePage = [[FDDUserPage alloc] initWithFrame:self.view.frame imageNameArray:imageNameArray buttonIsHidden:NO userPageType:FDDUserPageNormal];
     guidePage.slideInto = YES;
 //    guidePage.pageIndicatorTintColor = [UIColor grayColor];
+    guidePage.isautoScrolling = YES;
     [self.navigationController.view addSubview:guidePage];
 }
 
