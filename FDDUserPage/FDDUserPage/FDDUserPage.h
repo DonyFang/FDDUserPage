@@ -12,6 +12,8 @@ typedef enum : NSUInteger {
     FDDUserPageGif,//gif启动图
     FDDADPage,//广告图
 } FDDUserPageType;
+
+
 @interface FDDUserPage : UIView
 //当前选中的颜色
 @property(nonatomic,strong)UIColor *currentPageControlColor;
@@ -21,7 +23,21 @@ typedef enum : NSUInteger {
 @property(nonatomic,assign)BOOL   isautoScrolling;
 //是否可以自动播放视频
 @property(nonatomic,assign)BOOL   isLoopPlayback;
+//倒数时间label
+@property (nonatomic,strong)UILabel * countDownTimerLabel;
 
+@property (nonatomic,assign)BOOL       isShowSkipButton;//是否显示跳过按钮
+
+@property (nonatomic,strong)UITapGestureRecognizer * skipLabelTap;//跳过手势
+
+@property (nonatomic,assign)NSInteger  adDuration;//显示时间
+@property (nonatomic,assign)BOOL      isCloseTimer;//是否关不启动定时器
+
+@property (nonatomic,strong)NSTimer * adTimer;//广告定时器
+
+
+@property (nonatomic,strong)NSString * adImgUrl;//广告网络图片
+@property (nonatomic,strong)NSString * adLocalImgName;//广告本地图片
 /**
  没有选中的颜色
  */

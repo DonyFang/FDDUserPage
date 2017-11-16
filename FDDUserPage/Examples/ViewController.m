@@ -11,6 +11,7 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong)FDDUserPage * userPage;
 @end
 
 @implementation ViewController
@@ -18,19 +19,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//
 //    if (![[NSUserDefaults standardUserDefaults] boolForKey:BOOLFORKEY]) {
 //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:BOOLFORKEY];
 //        // 静态引导页
-        [self setStaticGuidePage];
+//        [self setStaticGuidePage];
 //
 //        // 动态引导页
 //         [self setDynamicGuidePage];
 //
 //        // 视频引导页
-//        // [self setVideoGuidePage];
+         [self setVideoGuidePage];
 //    }
+    
 //
+    
+//    [self setStaticGuidePage2];
     // 设置该控制器背景图片
     UIImageView *bg_imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     [bg_imageView setImage:[UIImage imageNamed:@"view_bg_image"]];
@@ -48,8 +51,20 @@
     NSArray *imageNameArray = @[@"guideImage1.jpg",@"guideImage2.jpg",@"guideImage3.jpg",@"guideImage4.jpg",@"guideImage5.jpg"];
     FDDUserPage *guidePage = [[FDDUserPage alloc] initWithFrame:self.view.frame imageNameArray:imageNameArray buttonIsHidden:NO userPageType:FDDUserPageNormal];
     guidePage.slideInto = YES;
+    self.userPage = guidePage;
 //    guidePage.pageIndicatorTintColor = [UIColor grayColor];
-    guidePage.isautoScrolling = YES;
+    guidePage.isautoScrolling = NO;
+    [self.navigationController.view addSubview:self.userPage];
+}
+
+- (void)setStaticGuidePage2 {
+    NSArray *imageNameArray = @[@"guideImage1.jpg",@"guideImage2.jpg",@"guideImage3.jpg",@"guideImage4.jpg",@"guideImage5.jpg"];
+    FDDUserPage *guidePage = [[FDDUserPage alloc] initWithFrame:self.view.frame imageNameArray:imageNameArray buttonIsHidden:NO userPageType:FDDADPage];
+//    guidePage.slideInto = YES;
+    guidePage.adDuration = 7.0f;
+    //    guidePage.pageIndicatorTintColor = [UIColor grayColor];
+    guidePage.adLocalImgName = @"guideImage2.jpg";
+//    self.userPage = guidePage;
     [self.navigationController.view addSubview:guidePage];
 }
 
