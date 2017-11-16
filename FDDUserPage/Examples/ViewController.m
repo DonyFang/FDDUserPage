@@ -53,7 +53,7 @@
     guidePage.slideInto = YES;
     self.userPage = guidePage;
 //    guidePage.pageIndicatorTintColor = [UIColor grayColor];
-    guidePage.isautoScrolling = NO;
+    guidePage.isAutoScrolling = NO;
     [self.navigationController.view addSubview:self.userPage];
 }
 

@@ -20,7 +20,7 @@ typedef enum : NSUInteger {
 
 
 //是否自动滚动
-@property(nonatomic,assign)BOOL   isautoScrolling;
+@property(nonatomic,assign)BOOL   isAutoScrolling;
 //是否可以自动播放视频
 @property(nonatomic,assign)BOOL   isLoopPlayback;
 //倒数时间label

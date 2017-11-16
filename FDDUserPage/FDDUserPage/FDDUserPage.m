@@ -42,7 +42,7 @@
     if ([super initWithFrame:frame]) {
         self.slideInto = NO;
         self.isShowSkipButton = YES;
-        self.isautoScrolling = NO;
+        self.isAutoScrolling = NO;
         if (isHidden == YES) {
             self.imageArray = imageNameArray;
         }
@@ -179,12 +179,10 @@
 }
 /**
  设置是否自动滚动引导页面
-
- @param isautoScrolling isautoScrolling
  */
-- (void)setIsautoScrolling:(BOOL)isautoScrolling{
-    _isautoScrolling = isautoScrolling;
-    if (!_timer && _isautoScrolling) {
+- (void)setIsAutoScrolling:(BOOL)isAutoScrolling{
+    _isAutoScrolling = isAutoScrolling;
+    if (!_timer && _isAutoScrolling) {
         [self startTimer];
     }
 }
@@ -193,7 +191,7 @@
  自动滚动的定时器
  */
 - (void)startTimer{
-    if (!_isautoScrolling) {
+    if (!_isAutoScrolling) {
         return;
     }
     _timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(scrollingOnTimer) userInfo:nil repeats:YES];
